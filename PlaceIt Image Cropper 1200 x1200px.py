@@ -16,7 +16,8 @@ def run(playwright: Playwright) -> None:
     page.locator("#login_user_password").fill("Coldfusi0n!")
     page.get_by_role("button", name="Log In").click(timeout=150000)
     page.get_by_role("button", name="Accept Cookies").click(timeout=150000)
-    # page1.goto("chrome://downloads/")
+    
+    #Round 1
     page.goto("https://placeit.net/purchases/",
                wait_until="domcontentloaded",
                timeout=600000  # 60 seconds
@@ -38,11 +39,14 @@ def run(playwright: Playwright) -> None:
 
     # Rebuild new URL dynamically
     updated_url = f"{crop_url}&width=1200&height=1200"
-    page.goto(updated_url)
+    page.goto(updated_url,
+               wait_until="domcontentloaded",
+               timeout=600000
+               )
 
-    time.sleep(3)
+    # time.sleep(3)
     page.get_by_role("spinbutton").nth(1).fill("1200")
-    time.sleep(10)   # wait 10 seconds
+    # time.sleep(10)   # wait 10 seconds
     page.get_by_role("button", name="Download").click(timeout=150000)
     time.sleep(10)   # wait 10 seconds
     with page.expect_download() as download_info:
@@ -52,7 +56,27 @@ def run(playwright: Playwright) -> None:
     page1 = context.new_page()
     page1.goto("chrome://downloads/")
     page1.get_by_role("button", name="Copy download link").click(timeout=200000)
+########## add delete dl here
+    page1.get_by_role("button", name="Delete from history").click(timeout=200000)
 
+    page.goto("https://placeit.net/purchases/",
+               wait_until="domcontentloaded",
+               timeout=600000  # 60 seconds
+              )
+    
+    page.hover("#container .page-container.downloads a.itemLink .img-wrapper")
+    # delete button
+    page.get_by_role("button").nth(3).click(timeout=150000)
+    page.get_by_role("button", name="Delete").click()
+    page.reload()  # Default reload
+    
+    page.hover("#container .page-container.downloads a.itemLink .img-wrapper")
+    # delete button
+    page.get_by_role("button").nth(3).click(timeout=150000)
+    page.get_by_role("button", name="Delete").click()
+    page.reload()  # Default reload
+
+    
 
     # ---------------------
     input("🎉 All Done! Press Enter to close.")

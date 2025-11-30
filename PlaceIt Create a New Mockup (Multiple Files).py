@@ -14,20 +14,22 @@ def run(playwright: Playwright) -> None:
 
     ############################ LOG IN ############################
     page.goto("https://placeit.net/login-process?redirect_to=/my_placeit")
-    page.locator("#login_user_email").fill("xxxxxxxx")
-    page.locator("#login_user_password").fill("xxxxxxxx")
+    page.locator("#login_user_email").click(timeout=150000)
+    page.locator("#login_user_email").fill("ej.aston1@outlook.com")
+    page.locator("#login_user_password").click(timeout=150000)
+    page.locator("#login_user_password").fill("Coldfusi0n!")
     page.get_by_role("button", name="Log In").click(timeout=150000)
-
-    # Load mockup editor once
-    editor_url = "https://placeit.net/c/mockups/stages/mockup-of-a-happy-short-haired-woman-wearing-a-bella-canvas-crop-top-m14385/editor?draftId=59806181&multiFolder_Gradient=96bd8c66ebcf7b9d4ff11f54c7fe6938&colorFolder_Gradient=%2300619b&colorFolder_Shirt%20Color=%23000000&customG_0=t6axh5e71b&draftId=59833981"
-    page.goto(editor_url, wait_until="domcontentloaded", timeout=600000)
-
+    page.get_by_role("list").filter(has_text="Mockup of a Happy Short-").get_by_role("link").click(timeout=150000)
+    page.goto("https://placeit.net/c/mockups/stages/mockup-of-a-happy-short-haired-woman-wearing-a-bella-canvas-crop-top-m14385/editor?draftId=59806181&multiFolder_Gradient=96bd8c66ebcf7b9d4ff11f54c7fe6938&colorFolder_Gradient=%2300619b&colorFolder_Shirt%20Color=%23000000&customG_0=t6axh5e71b&draftId=59" \
+    "833981",
+               wait_until="domcontentloaded",
+               timeout=600000  # 60 seconds    
+                )
     page.get_by_role("button", name="Accept Cookies").click(timeout=150000)
-
     ###############################################################
-    # Automated File List
+    # Automated File List 📂
     ###############################################################
-    file_numbers = [26, 27, 28, 29]  # <<< update freely
+    file_numbers = [71, 72]  # <<< update freely
 
     total = len(file_numbers)
     start_time = time.time()
@@ -64,11 +66,12 @@ def run(playwright: Playwright) -> None:
         download = download_info.value
 
         ############################ CLEAR HISTORY ######################
-        page1 = context.new_page()
-        page1.goto("chrome://downloads/")
-        page1.get_by_role("button", name="Delete from history").click()
-        page.goto(editor_url, wait_until="domcontentloaded", timeout=600000)
-
+        # page1 = context.new_page()
+        # page1.goto("chrome://downloads/")
+        # page1.get_by_role("button", name="Delete from history").click()
+        # page.goto("https://placeit.net/c/mockups/stages/mockup-of-a-happy-short-haired-woman-wearing-a-bella-canvas-crop-top-m14385/editor?draftId=59806181&multiFolder_Gradient=96bd8c66ebcf7b9d4ff11f54c7fe6938&colorFolder_Gradient=%2300619b&colorFolder_Shirt%20Color=%23000000&customG_0=t6axh5e71b&draftId=59833981",
+                #   wait_until="domcontentloaded",
+                #   timeout=600000)
         ########################🎉 PER-ITEM SUMMARY #####################
         cycle_time = time.time() - cycle_start
         print(f"   ✓ {num}.png complete (took {cycle_time:.1f}s)\n")
