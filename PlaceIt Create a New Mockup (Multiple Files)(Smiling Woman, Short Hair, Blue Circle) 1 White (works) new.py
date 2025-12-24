@@ -10,28 +10,28 @@ def run(playwright: Playwright) -> None:
     browser = playwright.chromium.launch(headless=False)
     context = browser.new_context()
     page = context.new_page()
-    page.locator("body").click(timeout=150000)
+    page.locator("body").click(timeout=6000000)
 
     ############################ LOG IN ############################
     page.goto("https://placeit.net/login-process?redirect_to=/my_placeit")
-    page.locator("#login_user_email").click(timeout=150000)
+    page.locator("#login_user_email").click(timeout=6000000)
     page.locator("#login_user_email").fill("ej.aston1@outlook.com")
-    page.locator("#login_user_password").click(timeout=150000)
+    page.locator("#login_user_password").click(timeout=6000000)
     page.locator("#login_user_password").fill("Dr3amc@st!")
-    page.get_by_role("button", name="Log In").click(timeout=150000)
+    page.get_by_role("button", name="Log In").click(timeout=6000000)
 
     ################################################################
 
-    page.get_by_role("list").filter(has_text="Mockup of a Happy Short-").get_by_role("link").click(timeout=150000)
+    page.get_by_role("list").filter(has_text="Mockup of a Happy Short-").get_by_role("link").click(timeout=6000000)
     page.goto("https://placeit.net/c/mockups/stages/mockup-of-a-happy-short-haired-woman-wearing-a-bella-canvas-crop-top-m14385/editor?draftId=59806181&multiFolder_Gradient=96bd8c66ebcf7b9d4ff11f54c7fe6938&colorFolder_Gradient=%2300619b&colorFolder_Shirt%20Color=%23ffffff&draftId=59904305",
                wait_until="domcontentloaded",
                timeout=600000  # 60 seconds    
                 )
-    page.get_by_role("button", name="Accept Cookies").click(timeout=150000)
+    page.get_by_role("button", name="Accept Cookies").click(timeout=6000000)
 
     page.locator('button:has-text("750x750px")').click(timeout=60000)
 
-    page.get_by_role("button", name="Upload Image 750x750px").set_input_files("205.png")
+    page.get_by_role("button", name="Upload Image 750x750px").set_input_files("220.png")
 
     page.get_by_role("button", name="Crop", exact=True).click(timeout=600000)
     time.sleep(10)
@@ -44,7 +44,7 @@ def run(playwright: Playwright) -> None:
     ###############################################################
     # Automated File List 📂
     ###############################################################
-    file_numbers = [206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350]  # <<< update freely
+    file_numbers = [221,222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256, 257, 258, 259, 260, 261, 262, 263, 264, 265, 266, 267, 268, 269, 270, 271, 272, 273, 274, 275, 276, 277, 278, 279, 280, 281, 282, 283, 284, 285, 286, 287, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 298, 299, 300, 301, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 312, 313, 314, 315, 316, 317, 318, 319, 320, 321, 322, 323, 324, 325, 326, 327, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342, 343, 344, 345, 346, 347, 348, 349, 350]  # <<< update freely
 
     total = len(file_numbers)
     start_time = time.time()
@@ -67,17 +67,17 @@ def run(playwright: Playwright) -> None:
         print("----------------------------------------\n")
 
         ########################## UPLOAD FILE 📂 #######################
-        page.locator("label").filter(has_text="Remove").locator("span").click(timeout=150000)
-        page.locator('button:has-text("750x750px")').click(timeout=150000)
+        page.locator("label").filter(has_text="Remove").locator("span").click(timeout=6000000)
+        page.locator('button:has-text("750x750px")').click(timeout=6000000)
         page.get_by_role("button", name="Insert Image 750x750px").set_input_files(f"{num}.png")
 
         ############################ CROP + DOWNLOAD ####################
-        page.get_by_role("button", name="Crop").click(timeout=150000)
+        page.get_by_role("button", name="Crop").click(timeout=6000000)
         time.sleep(10)
 
-        page.get_by_role("button", name="Download").click(timeout=150000)
+        page.get_by_role("button", name="Download").click(timeout=6000000)
         with page.expect_download() as download_info:
-            page.get_by_role("link", name="Click here to download").first.click(timeout=150000)
+            page.get_by_role("link", name="Click here to download").first.click(timeout=6000000)
         download = download_info.value
 
         ############################ CLEAR HISTORY ######################
