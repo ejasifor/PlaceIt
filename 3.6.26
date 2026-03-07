@@ -1,0 +1,31 @@
+import re
+from playwright.sync_api import Playwright, sync_playwright, expect
+
+
+def run(playwright: Playwright) -> None:
+    browser = playwright.chromium.launch(headless=False)
+    context = browser.new_context()
+    page = context.new_page()
+    page.goto("https://placeit.net/c/mockups/stages/bella-canvas-crop-top-mockup-of-a-woman-posing-in-a-studio-with-a-sublimated-bucket-hat-m40822/editor?draftId=59603215&colorFolder_Crop%20Top%20Color=%23ffffff&colorFolder_Hat%20Color=%23ffffff&draftId=59603215&customG_0=tbgpd26ad0")
+    page.locator(".p-icon.p-sm.remove-gray").first.click()
+    page.get_by_role("button", name="900x800px", exact=True).click()
+    page.get_by_role("listitem").filter(has_text="Remove this Image").locator("a").click()
+    page.get_by_role("button", name="Accept Cookies").click()
+    page.get_by_role("button", name="750x750px", exact=True).click()
+    page.get_by_role("listitem").filter(has_text="Upload From Your Device").locator("a").click()
+    page.get_by_role("button", name="Insert Image 750x750px").set_input_files("2.png")
+    page.get_by_role("button", name="Crop", exact=True).click()
+    page.goto("https://placeit.net/c/mockups/stages/bella-canvas-crop-top-mockup-of-a-woman-posing-in-a-studio-with-a-sublimated-bucket-hat-m40822/editor?draftId=59603215&colorFolder_Crop%20Top%20Color=%23ffffff&colorFolder_Hat%20Color=%23ffffff&draftId=59603215&customG_0=tbi6a08733")
+    page.get_by_role("button", name="Download").click()
+    page.get_by_role("dialog").locator("button").filter(has_text="×").click()
+    page.goto("https://placeit.net/c/mockups/stages/bella-canvas-crop-top-mockup-of-a-woman-posing-in-a-studio-with-a-sublimated-bucket-hat-m40822/editor?draftId=59603215&colorFolder_Crop%20Top%20Color=%23ffffff&colorFolder_Hat%20Color=%23ffffff&draftId=59603215&customG_0=tbi6a08733")
+    page.get_by_role("button", name="900x800px", exact=True).click()
+    page.get_by_role("listitem").filter(has_text="Remove this Image").locator("a").click()
+
+    # ---------------------
+    context.close()
+    browser.close()
+
+
+with sync_playwright() as playwright:
+    run(playwright)
